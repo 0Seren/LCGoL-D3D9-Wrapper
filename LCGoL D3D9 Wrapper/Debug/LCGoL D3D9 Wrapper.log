@@ -1,0 +1,14 @@
+﻿  d3d9.cpp
+d3d9.cpp(16): warning C4996: 'mbstowcs': This function or variable may be unsafe. Consider using mbstowcs_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\stdlib.h(920): note: see declaration of 'mbstowcs'
+d3d9.cpp(18): warning C4996: 'wcstombs': This function or variable may be unsafe. Consider using wcstombs_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\stdlib.h(1008): note: see declaration of 'wcstombs'
+d3d9.cpp(19): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\string.h(90): note: see declaration of 'strcat'
+d3d9.cpp(20): warning C4996: 'mbstowcs': This function or variable may be unsafe. Consider using mbstowcs_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\stdlib.h(920): note: see declaration of 'mbstowcs'
+C:\Users\allen_000\Documents\GitHub\LCGoL D3D9 Wrapper\LCGoL D3D9 Wrapper\LCGoL D3D9 Wrapper\d3d9.cpp : warning C4747: Calling managed '_DllMain@12': Managed code may not be run under loader lock, including the DLL entrypoint and calls reached from the DLL entrypoint
+  .NETFramework,Version=v4.5.2.AssemblyAttributes.cpp
+  AssemblyInfo.obj : /DEBUG:FASTLINK is not supported when managed code is present; restarting link with /DEBUG:FULL
+  LCGoL D3D9 Wrapper.vcxproj -> C:\Users\allen_000\Documents\GitHub\LCGoL D3D9 Wrapper\LCGoL D3D9 Wrapper\Debug\LCGoL D3D9 Wrapper.dll
+  LCGoL D3D9 Wrapper.vcxproj -> C:\Users\allen_000\Documents\GitHub\LCGoL D3D9 Wrapper\LCGoL D3D9 Wrapper\Debug\LCGoL D3D9 Wrapper.pdb (Partial PDB)

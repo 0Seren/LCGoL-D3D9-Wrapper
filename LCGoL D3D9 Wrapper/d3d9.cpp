@@ -1,10 +1,9 @@
 // This is the main DLL file.
 #include "stdafx.h"
 #include "d3d9.h"
-#include "LCGoL.h"
-#include <fstream>
+#include "Overlay.h"
 
-LCGoL game;
+#pragma unmanaged
 
 IDirect3D9 *WINAPI f_Direct3DCreate9(UINT SDKVersion)
 {
@@ -15,12 +14,9 @@ bool WINAPI DllMain(HMODULE hModule, DWORD fdwReason, LPVOID lpReserved) {
 	switch (fdwReason)
 	{
 	case DLL_PROCESS_ATTACH:
-		char path[MAX_PATH];
 		wchar_t path_[MAX_PATH];
 		GetSystemDirectory(path_, MAX_PATH);
-		wcstombs(path, path_, MAX_PATH);
-		strcat(path, "\\d3d9.dll");
-		mbstowcs(path_, path, MAX_PATH);
+		wcscat_s(path_, L"\\d3d9.dll");
 		hModule = LoadLibrary(path_);
 		orig_Direct3DCreate9 = (D3DC9)GetProcAddress(hModule, "Direct3DCreate9");
 		break;
@@ -50,7 +46,7 @@ HRESULT f_iD3D9::CreateDevice(UINT Adapter, D3DDEVTYPE DeviceType,
 	HRESULT hr = f_pD3D->CreateDevice(Adapter, DeviceType, hFocusWindow, BehaviorFlags, pPresentationParameters, ppReturnedDeviceInterface);
 
 	// NOTE: initialize your custom D3D components here.
-	game = LCGoL();
+	Overlay::Initialize(*ppReturnedDeviceInterface, pPresentationParameters);
 
 	return hr;
 }
@@ -58,19 +54,19 @@ HRESULT f_iD3D9::CreateDevice(UINT Adapter, D3DDEVTYPE DeviceType,
 HRESULT f_IDirect3DDevice9::Reset(D3DPRESENT_PARAMETERS *pPresentationParameters)
 {
 	// NOTE: call onLostDevice for custom D3D components here.
+	Overlay::OnLostDevice();
 
 	HRESULT hr = f_pD3DDevice->Reset(pPresentationParameters);
 
 	// NOTE: call onResetDevice for custom D3D components here.
-
+	Overlay::OnResetDevice(pPresentationParameters);
 	return hr;
 }
 
 HRESULT f_IDirect3DDevice9::EndScene()
 {
-
 	// NOTE: draw your custom D3D components here.
-	game.UpdateAll();
+	Overlay::Draw();
 
 	return f_pD3DDevice->EndScene();
 }
