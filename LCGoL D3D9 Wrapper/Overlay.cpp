@@ -1,6 +1,7 @@
 #include "Stdafx.h"
 #include "Overlay.h"
 #include "LCGoL.h"
+#include <string>
 
 #ifndef SAFE_RELEASE
 #define SAFE_RELEASE(p)      { if(p) { (p)->Release(); (p)=NULL; } }
@@ -30,14 +31,13 @@ namespace Overlay {
 		device->SetVertexShader(nullptr);
 		// draw
 		try {
-			game.CurrentMap.Update();
-			if (!game.CurrentMap.CurrentNull()) {
-				char *text = new char[5 + game.CurrentMap.Current().length()];
-				sprintf_s(text, 5 + game.CurrentMap.Current().length(), "Map: %s", game.CurrentMap.Current().c_str());
+			game.GameTime.Update();
+			if (!game.GameTime.CurrentNull()) {
+				char *text = new char[5 + 30];
+				sprintf_s(text, 5 + 30, "%u", game.GameTime.Current());
 				pFont->DrawTextA(NULL, text, -1, &rectangle, DT_CENTER, textColor);
 				delete text;
 			}
-			pFont->DrawTextA(NULL, "No Data", -1, &rectangle, DT_CENTER, textColor);
 		}
 		catch (...) {
 			pFont->DrawTextA(NULL, "Exception", -1, &rectangle, DT_CENTER, textColor);
