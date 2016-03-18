@@ -1,10 +1,6 @@
-﻿  Stdafx.cpp
-  AssemblyInfo.cpp
-  d3d9.cpp
-  LCGoL.cpp
+﻿  LCGoL.cpp
   Overlay.cpp
   Generating Code...
-  .NETFramework,Version=v4.5.2.AssemblyAttributes.cpp
      Creating library C:\Users\allen_000\Documents\GitHub\LCGoL D3D9 Wrapper\LCGoL D3D9 Wrapper\Release\d3d9.lib and object C:\Users\allen_000\Documents\GitHub\LCGoL D3D9 Wrapper\LCGoL D3D9 Wrapper\Release\d3d9.exp
   LCGoL D3D9 Wrapper.vcxproj -> C:\Users\allen_000\Documents\GitHub\LCGoL D3D9 Wrapper\LCGoL D3D9 Wrapper\Release\d3d9.dll
   LCGoL D3D9 Wrapper.vcxproj -> C:\Users\allen_000\Documents\GitHub\LCGoL D3D9 Wrapper\LCGoL D3D9 Wrapper\Release\d3d9.pdb (Full PDB)

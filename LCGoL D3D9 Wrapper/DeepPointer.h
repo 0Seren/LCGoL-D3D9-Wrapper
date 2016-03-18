@@ -1,20 +1,25 @@
 #pragma once
 #include <windows.h>
 #include <vector>
-using OffsetT = UINT32;
+using OffsetT = DWORD;
 
 
 
 template<typename T>
 public class DeepPointer {
 public:
-	DeepPointer(std::vector<OffsetT> offsets) {
+	DeepPointer(std::vector<OffsetT> offsets, DWORD EXEBaseAddress) {
 		_offsets = offsets;
-		final_address = 0;
+		final_address = (char*)EXEBaseAddress;
 		for (OffsetT const& offset : _offsets) {
 			final_address = (char*)(final_address + offset);
 		}
 	}
+
+	DeepPointer(std::vector<OffsetT> offsets, char* process_name) : DeepPointer(offsets, (DWORD)GetModuleHandleA(process_name)) {}
+
+	DeepPointer(std::vector<OffsetT> offsets, wchar_t* process_name) : DeepPointer(offsets, (DWORD)GetModuleHandleW(process_name)) {}
+
 	void Update() {
 		if (_Old != NULL) {
 			delete _Old;
@@ -24,6 +29,7 @@ public:
 		}
 		_Current = Deref();
 	}
+
 	bool OldNull() {
 		return _Old == NULL;
 	}
