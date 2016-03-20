@@ -64,3 +64,4 @@ Temporary Items
 *.metagen
 *.asm
 *.res
+*Release/d3d9.lib
