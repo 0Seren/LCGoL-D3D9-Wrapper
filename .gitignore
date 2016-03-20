@@ -64,4 +64,5 @@ Temporary Items
 *.metagen
 *.asm
 *.res
-*Release\d3d9.lib
+LCGoL-D3D9-Wrapper/LCGoL D3D9 Wrapper/Release/d3d9.lib
+LCGoL-D3D9-Wrapper\LCGoL D3D9 Wrapper\Release\d3d9.lib
