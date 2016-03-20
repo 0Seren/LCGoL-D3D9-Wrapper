@@ -1,59 +1,38 @@
 #pragma once
 #include <windows.h>
 #include <vector>
-#include <iostream>
 #include <fstream>
 using OffsetT = DWORD;
-
-
 
 template<typename T>
 public class DeepPointer {
 public:
 
-	DeepPointer(std::vector<OffsetT> offsets) {
-		_offsets = offsets;
-	}
+	DeepPointer(std::vector<OffsetT> offsets) : _offsets(offsets) {}
 
-	void Update() {
-		if (_Old != NULL) {
-			delete _Old;
+	bool Update() {
+		T* temp = Deref();
+		if (!(IsBadReadPtr(temp, sizeof(T)) || temp == nullptr || temp == NULL)) {
+			_Current = *temp;
+			return true;
 		}
-		if (_Current != NULL) {
-			_Old = _Current;
-		}
-		_Current = Deref();
-	}
-
-	bool OldNull() {
-		return _Old == NULL || _Old == nullptr || IsBadReadPtr(_Old, 4);
-	}
-
-	bool CurrentNull() {
-		return _Current == NULL || _Current == nullptr || IsBadReadPtr(_Old, 4);
-	}
-
-	T Old() {
-		return *_Old;
+		return false;
 	}
 	T Current() {
-		return *_Current;
+		return _Current;
 	}
 private:
 	T* Deref() {
 		if (BaseEXEAddress == 0) {
 			BaseEXEAddress = (DWORD)GetModuleHandle(nullptr);
 		}
-		final_address = (char*)BaseEXEAddress;
-		for (OffsetT const& offset : _offsets) {
-			final_address = (char*)(final_address + offset);
+		char* final_address = (char*)(((char*)BaseEXEAddress) + _offsets[0]);
+		for (size_t i = 1; i < _offsets.size(); i++) {
+			final_address = (char*)(*((OffsetT*)final_address) + _offsets[i]);
 		}
 		return (T*)final_address;
 	}
-	char* final_address;
-	std::vector<OffsetT> _offsets;
-	T *_Old = NULL;
-	T *_Current = NULL;
+	T _Current;
 	DWORD BaseEXEAddress = 0;
-	std::ofstream myfile;
+	std::vector<OffsetT> _offsets;
 };
