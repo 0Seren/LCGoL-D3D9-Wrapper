@@ -1,5 +1,5 @@
 #pragma once
-#include <d3dx9.h>
+#include "Stdafx.h"
 
 namespace Overlay {
 	void Initialize(IDirect3DDevice9 *pDevice, D3DPRESENT_PARAMETERS *pPP);

@@ -1,8 +1,6 @@
 #include "Stdafx.h"
 #include "Overlay.h"
-#include "GameMemoryPool.h"
-#include <string>
-#include <time.h>
+#include "GameData.h"
 
 #ifndef SAFE_RELEASE
 #define SAFE_RELEASE(p)      { if(p) { (p)->Release(); (p)=NULL; } }
@@ -11,7 +9,7 @@
 namespace Overlay {
 	D3DDEVICE_CREATION_PARAMETERS cparams;
 	LPD3DXFONT pFont;
-	GameMemoryPool memory;
+	GameData memory;
 	D3DCOLOR textColor;
 	D3DCOLOR rectColor;
 	IDirect3DDevice9 *device;
@@ -31,7 +29,7 @@ namespace Overlay {
 		D3DXCreateFont(device, (int)(40 * heightModifier * (heightModifier + .85 * (1-heightModifier))), 0, FW_NORMAL, 1, false, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, 5, DEFAULT_PITCH | FF_DONTCARE, L"Verdana", &pFont);
 		textColor = D3DXCOLOR(207, 210, 232, 1);
 		rectColor = D3DCOLOR_XRGB(32, 32, 32);
-		memory = GameMemoryPool();
+		memory = GameData();
 
 		int left = (int)(855 * widthModifier);
 		int top = (int)(304 * heightModifier);

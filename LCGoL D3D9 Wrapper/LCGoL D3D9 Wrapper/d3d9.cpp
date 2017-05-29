@@ -2,6 +2,7 @@
 #include "stdafx.h"
 #include "d3d9.h"
 #include "Overlay.h"
+#include "MemoryProtectionHack.h"
 
 #pragma unmanaged
 
@@ -46,6 +47,7 @@ HRESULT f_iD3D9::CreateDevice(UINT Adapter, D3DDEVTYPE DeviceType,
 	HRESULT hr = f_pD3D->CreateDevice(Adapter, DeviceType, hFocusWindow, BehaviorFlags, pPresentationParameters, ppReturnedDeviceInterface);
 
 	// NOTE: initialize your custom D3D components here.
+	MemoryProtectionHack::Initialize();
 	Overlay::Initialize(*ppReturnedDeviceInterface, pPresentationParameters);
 
 	return hr;

@@ -1,0 +1,35 @@
+#include "stdafx.h"
+#include "MemoryProtectionHack.h"
+
+using namespace std::literals::string_literals;
+void MemoryProtectionHack::Initialize() {
+	static const std::map<std::size_t, std::string> patches = {
+		{ 0x43F902, "\x60\x07\x42\x00\x90\x90"s },{ 0x459E42, "\xA0\xD3\x64\x00\x90\x90"s },{ 0x4682F2, "\xB0\x44\x81\x00\x90\x90"s },
+		{ 0x4807D2, "\xE0\x57\x7A\x00\x90\x90"s },{ 0x4AD182, "\x20\xB1\x4C\x00\x90\x90"s },{ 0x4D3042, "\x10\x64\x44\x00\x90\x90"s },
+		{ 0x4D6A12, "\x00\x0F\x63\x00\x90\x90"s },{ 0x526262, "\xA0\x9E\x75\x00\x90\x90"s },{ 0x58AF02, "\x00\xCD\x4B\x00\x90\x90"s },
+		{ 0x5A3412, "\xB0\xC9\x71\x00\x90\x90"s },{ 0x5CC412, "\x30\xE2\x50\x00\x90\x90"s },{ 0x5CE532, "\x60\x1F\x7A\x00\x90\x90"s },
+		{ 0x5EE592, "\xC0\xC6\x60\x00\x90\x90"s },{ 0x5FB8D2, "\x60\x11\x7B\x00\x90\x90"s },{ 0x607792, "\xE0\x6B\x6E\x00\x90\x90"s },
+		{ 0x60BEC2, "\xA0\xC9\x77\x00\x90\x90"s },{ 0x60C922, "\xB0\x89\x56\x00\x90\x90"s },{ 0x640322, "\x40\x7F\x52\x00\x90\x90"s },
+		{ 0x654C92, "\xC0\x44\x61\x00\x90\x90"s },{ 0x657A62, "\x70\xBB\x78\x00\x90\x90"s },{ 0x65DA32, "\x40\x15\x6A\x00\x90\x90"s },
+		{ 0x67FC22, "\xE0\x93\x4E\x00\x90\x90"s },{ 0x69F9B2, "\xA0\xBB\x6C\x00\x90\x90"s },{ 0x6BE4F2, "\x80\x29\x48\x00\x90\x90"s },
+		{ 0x6D6B62, "\x20\x8E\x51\x00\x90\x90"s },{ 0x6E9362, "\x80\xF1\x53\x00\x90\x90"s },{ 0x700FE2, "\x10\x0C\x44\x00\x90\x90"s },
+		{ 0x7044D2, "\x10\xF3\x78\x00\x90\x90"s },{ 0x729012, "\xB0\xCC\x60\x00\x90\x90"s },{ 0x747562, "\x90\x8E\x6B\x00\x90\x90"s },
+		{ 0x7588F2, "\xF0\xD9\x4D\x00\x90\x90"s },{ 0x75AA82, "\x50\x25\x40\x00\x90\x90"s },{ 0x7669D2, "\x60\x3F\x4C\x00\x90\x90"s },
+		{ 0x77D462, "\x20\xDB\x4B\x00\x90\x90"s },{ 0x7BE002, "\x50\x2E\x6D\x00\x90\x90"s },{ 0x7C6142, "\xA0\xD1\x6B\x00\x90\x90"s },
+		{ 0x7D0162, "\x10\x4D\x62\x00\x90\x90"s },{ 0x8074E2, "\x30\x5C\x69\x00\x90\x90"s },
+	};
+
+	for (auto& kv : patches) {
+		MemoryProtectionHack::memcpy_protected(reinterpret_cast<void*>(kv.first), kv.second.c_str(), kv.second.length());
+	}
+}
+
+void MemoryProtectionHack::memcpy_protected(void* dest, const void* src, std::size_t size) {
+	DWORD oldProtect;
+	if (VirtualProtect(dest, size, PAGE_READWRITE, &oldProtect))
+	{
+		std::memcpy(dest, src, size);
+		DWORD tmp;
+		VirtualProtect(dest, size, oldProtect, &tmp);
+	}
+}
